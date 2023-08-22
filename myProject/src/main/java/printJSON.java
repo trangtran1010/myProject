@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class printJSON {
     private static final String COMMA_DELIMITER = ",";
 
-    public List<objectName> pintResult() throws IOException {
+    public void pintResult() throws IOException {
         String Path = "C:\\Users\\trangthihuyentran\\Desktop\\Test data\\NewDataCollection7.csv";
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         List<objectName> results = new ArrayList<objectName>();
@@ -24,23 +24,27 @@ public class printJSON {
             if (header == "") header = fields[0];
             results.add(new objectName("REQ_00" + ++i, header, "REQ_00" + i, fields[0]));
         }
-        new GsonBuilder().setPrettyPrinting().create().toJson(results);
-        return results;
+        System.out.println("Question" + new GsonBuilder().setPrettyPrinting().create().toJson(results));
     }
 
     public void commentLine() throws IOException {
-        List<objectName> results = pintResult();
         Scanner inital = new Scanner(System.in);
         System.out.println("Input question: ");
         int numberOfQuestion = inital.nextInt();
 
+        readCSV obj = new readCSV();
+        printJSON printJ = new printJSON();
+
         switch (numberOfQuestion) {
-            case 1, 2:
-                System.out.println("Question " + new GsonBuilder().setPrettyPrinting().create().toJson(results.get(--numberOfQuestion)));
+            case 1:
+                obj.creatNewFile();
+                break;
+            case 2:
+                printJ.pintResult();
                 break;
             case 3:
-                System.out.println("Question " + new GsonBuilder().setPrettyPrinting().create().toJson(results));
-                break;
+                obj.creatNewFile();
+                printJ.pintResult();
         }
     }
 }
